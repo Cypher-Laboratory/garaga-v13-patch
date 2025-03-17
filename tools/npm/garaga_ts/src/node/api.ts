@@ -19,11 +19,29 @@ export type MsmCalldataBuilderOptons = Partial<{
   risc0Mode: boolean;
 }>;
 
-export function msmCalldataBuilder(points: G1Point[], scalars: bigint[], curveId: CurveId, options: MsmCalldataBuilderOptons = {}): bigint[] {
-  const values = points.reduce<bigint[]>((values, point) => values.concat(point), []);
-  const includeDigitsDecomposition = options.includeDigitsDecomposition || true;
+export function msmCalldataBuilder(
+  points: G1Point[],
+  scalars: bigint[],
+  curveId: CurveId,
+  options: MsmCalldataBuilderOptons = {}
+): bigint[] {
+  const values = points.reduce<bigint[]>(
+    (values, point) => values.concat(point),
+    []
+  );
+  const includeDigitsDecomposition =
+    options.includeDigitsDecomposition || false;
   const includePointsAndScalars = options.includePointsAndScalars || true;
-  const serializeAsPureFelt252Array = options.serializeAsPureFelt252Array || false;
+  const serializeAsPureFelt252Array =
+    options.serializeAsPureFelt252Array || false;
   const risc0Mode = options.risc0Mode || false;
-  return msm_calldata_builder(values, scalars, curveId, includeDigitsDecomposition, includePointsAndScalars, serializeAsPureFelt252Array, risc0Mode);
+  return msm_calldata_builder(
+    values,
+    scalars,
+    curveId,
+    includeDigitsDecomposition,
+    includePointsAndScalars,
+    serializeAsPureFelt252Array,
+    risc0Mode
+  );
 }
